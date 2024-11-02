@@ -125,7 +125,7 @@ class Player{
       coor[2] = 0;
       velo[2] = 0;
     }else{
-      velo[2] -= 2; // gravity
+      velo[2] -= 1.5; // gravity
     }
   }
   void lag(float[] arr, float[] dest, float amt){

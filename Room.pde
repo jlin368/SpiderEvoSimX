@@ -86,15 +86,6 @@ class Room{
     }*/
   }
   
-  color outsideFloorColor(){
-    int day = Math.round(ticksToDays(ticks)) % 365;
-    
-    if (day < 60 || day >= 335) {return color(240,240,240);}
-    if (day >= 60 && day < 152) {return color(164,255,115);}
-    if (day >= 152 && day < 244) {return color(82,224,0);}
-    return color(224,232,0);
-  }
-  
   void drawWalls(){
     g.noStroke();
     float[] mins = {99999,99999};
@@ -132,14 +123,6 @@ class Room{
     g.vertex(maxes[0]+MARGIN,mins[1]-MARGIN,-EPS);
     g.vertex(maxes[0]+MARGIN,maxes[1]+MARGIN,-EPS);
     g.vertex(mins[0]-MARGIN,maxes[1]+MARGIN,-EPS);
-    g.endShape(CLOSE);
-    
-    g.fill(outsideFloorColor());
-    g.beginShape();
-    g.vertex(10000,10000,-EPS-0.01);
-    g.vertex(10000,-10000,-EPS-0.01);
-    g.vertex(-10000,-10000,-EPS-0.01);
-    g.vertex(-10000,10000,-EPS-0.01);
     g.endShape(CLOSE);
     
     drawGraphKiosk();

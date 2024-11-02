@@ -61,16 +61,16 @@ class Spider{
   }
   color getColor(){
     int c = swattersSeen.size();
-    if(c == 0 || c == 1){
-      return color(0,0,0,255);
+    if(c == 0 || c == 1){return color(0,0,0,255);}
+    if(c >= 1000){return color(192,255,255);}
+    if(c >= 365.25){return color(229,184,11);}
+    if(c >= 100){return color(112,41,99);}
+    if(c < 6){
+      float fac = (c-1)/5.0;
+      return color(0,fac*140,255-fac*255,255);
     }else{
-      if(c < 6){
-        float fac = (c-1)/5.0;
-        return color(0,fac*140,255-fac*255,255);
-      }else{
-        float fac = min(1,(c-6)/19.0);
-        return color(255*fac,140-fac*140,0,255);
-      }
+      float fac = min(1,(c-6)/19.0);
+      return color(255*fac,140-fac*140,0,255);
     }
   }
   color transitionColor(color a, color b, float prog){
@@ -337,7 +337,6 @@ class Spider{
   void reincarnate(ArrayList<Spider> spiders){
     dailyDeaths++;
     parent = spiders.get((int)random(0,spiders.size()));
-    float MUTATION_FACTOR = 0.2;
     genome = mutate(parent.genome, MUTATION_FACTOR);
     coor = deepCopy(parent.coor);
     leg_coor = deepCopy(parent.leg_coor);

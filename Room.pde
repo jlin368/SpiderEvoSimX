@@ -59,6 +59,7 @@ class Room{
     result[0] = lerp(walls[w1][0],walls[w2][0],prog);
     result[1] = lerp(walls[w1][1],walls[w2][1],prog);
     result[3] = atan2(walls[w2][1]-walls[w1][1],walls[w2][0]-walls[w1][0]);
+    
     return result;
   }
   
@@ -84,6 +85,16 @@ class Room{
       return result;
     }*/
   }
+  
+  color outsideFloorColor(){
+    int day = Math.round(ticksToDays(ticks)) % 365;
+    
+    if (day < 60 || day >= 335) {return color(240,240,240);}
+    if (day >= 60 && day < 152) {return color(164,255,115);}
+    if (day >= 152 && day < 244) {return color(82,224,0);}
+    return color(224,232,0);
+  }
+  
   void drawWalls(){
     g.noStroke();
     float[] mins = {99999,99999};
@@ -113,7 +124,8 @@ class Room{
       g.vertex(x1,y1,z2);
       g.endShape(CLOSE);
     }
-    float MARGIN = 20;
+    
+    float MARGIN = 0;
     g.fill(FLOOR_COLOR);
     g.beginShape();
     g.vertex(mins[0]-MARGIN,mins[1]-MARGIN,-EPS);
@@ -121,6 +133,15 @@ class Room{
     g.vertex(maxes[0]+MARGIN,maxes[1]+MARGIN,-EPS);
     g.vertex(mins[0]-MARGIN,maxes[1]+MARGIN,-EPS);
     g.endShape(CLOSE);
+    
+    g.fill(outsideFloorColor());
+    g.beginShape();
+    g.vertex(10000,10000,-EPS-0.01);
+    g.vertex(10000,-10000,-EPS-0.01);
+    g.vertex(-10000,-10000,-EPS-0.01);
+    g.vertex(-10000,10000,-EPS-0.01);
+    g.endShape(CLOSE);
+    
     drawGraphKiosk();
   }
   void drawGraphKiosk(){

@@ -70,7 +70,7 @@ class Player{
   void takeInputs(KeyHandler keyHandler){
     float r = coor[3];
     accelerating = false;
-    for(int i = 0; i < keyHandler.keysDown.length; i++){
+    for(int i = 0; i < 4; i++){
       if(keyHandler.keysDown[i]){
         accelerating = true;
       }
@@ -95,6 +95,18 @@ class Player{
       sfx[8].play();
       velo[2] = 12;
     }
+    if(keyHandler.keysDown[7]){
+      CAM_DIST_FROM_PLAYER += 1;
+    }
+    if(keyHandler.keysDown[8]){
+      CAM_DIST_FROM_PLAYER -= 1;
+    }
+    if(keyHandler.keysDown[9]){
+      CAM_HEIGHT_ABOVE_PLAYER += 1;
+    }
+    if(keyHandler.keysDown[10]){
+      CAM_HEIGHT_ABOVE_PLAYER -= 1;
+    }
   }
   void doPhysics(Room room){
     float[][] kioskWalls = {{320,320},{320,480},{640,480},{640,320},{320,320}};
@@ -113,7 +125,7 @@ class Player{
       coor[2] = 0;
       velo[2] = 0;
     }else{
-      velo[2] -= 1; // gravity
+      velo[2] -= 2; // gravity
     }
   }
   void lag(float[] arr, float[] dest, float amt){
@@ -152,11 +164,9 @@ class Player{
     coor[3] = camera[0];
     lag(lag_coor,coor,0.13);
     lag_coor[3] = coor[3];
-    float DISTANCE_FROM_PLAYER = 800;
-    float HEIGHT_ABOVE_PLAYER = 100;
-    g.translate(0,0,DISTANCE_FROM_PLAYER);
+    g.translate(0,0,CAM_DIST_FROM_PLAYER);
     g.rotateX(PI*0.46-camera[1]);
     g.rotateZ(-lag_coor[3]-PI/2);
-    g.translate(-lag_coor[0],-lag_coor[1],-HEIGHT_ABOVE_PLAYER);
+    g.translate(-lag_coor[0],-lag_coor[1],-CAM_HEIGHT_ABOVE_PLAYER);
   }
 }
